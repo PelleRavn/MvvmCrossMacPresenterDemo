@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SecondViewController">
+            <connections>
+                <outlet property="BackButton" destination="jSQ-gP-IKS" id="71k-Oa-JaS"/>
+                <outlet property="TextField" destination="XpF-4a-Khl" id="gvV-Y8-QOL"/>
+                <outlet property="TextLabel" destination="A2R-wo-NdA" id="w8z-9V-yax"/>
+                <outlet property="view" destination="4" id="17"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="4">
+            <rect key="frame" x="0.0" y="0.0" width="470" height="296"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A2R-wo-NdA">
+                    <rect key="frame" x="18" y="226" width="434" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="raK-0R-iQ2">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XpF-4a-Khl">
+                    <rect key="frame" x="20" y="189" width="430" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="EcB-AN-DFU">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jSQ-gP-IKS">
+                    <rect key="frame" x="198" y="131" width="75" height="32"/>
+                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Quz-iQ-xAl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="A2R-wo-NdA" secondAttribute="trailing" constant="20" symbolic="YES" id="51o-u2-OEN"/>
+                <constraint firstItem="A2R-wo-NdA" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="20" symbolic="YES" id="LDl-C8-13t"/>
+                <constraint firstItem="jSQ-gP-IKS" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="MBw-k1-unk"/>
+                <constraint firstItem="jSQ-gP-IKS" firstAttribute="top" secondItem="XpF-4a-Khl" secondAttribute="bottom" constant="30" id="Mdu-RP-UmY"/>
+                <constraint firstItem="A2R-wo-NdA" firstAttribute="top" secondItem="4" secondAttribute="top" constant="53" id="VmK-Bq-Roh"/>
+                <constraint firstItem="XpF-4a-Khl" firstAttribute="leading" secondItem="A2R-wo-NdA" secondAttribute="leading" id="WTX-mk-rRZ"/>
+                <constraint firstItem="XpF-4a-Khl" firstAttribute="top" secondItem="A2R-wo-NdA" secondAttribute="bottom" constant="15" id="bft-WK-vpw"/>
+                <constraint firstItem="XpF-4a-Khl" firstAttribute="trailing" secondItem="A2R-wo-NdA" secondAttribute="trailing" id="x4i-HS-4JP"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>
