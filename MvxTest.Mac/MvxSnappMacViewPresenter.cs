@@ -12,6 +12,13 @@ using Foundation;
 
 namespace MvxTest.Mac
 {
+	public enum WindowPresentationStyle
+	{
+		NewWindow,
+		Modal,
+		Sheet
+	}
+
 	public class MvxSnappMacViewPresenter
 		: MvxBaseMacViewPresenter
 	{
@@ -21,6 +28,7 @@ namespace MvxTest.Mac
 		private Dictionary<NSWindow, Stack<NSViewController>> _windowViewControllers = new Dictionary<NSWindow, Stack<NSViewController>>();
 		private Dictionary<IMvxViewModel, NSWindow> _vmWindowDictionary = new Dictionary<IMvxViewModel, NSWindow>();
 		private NSWindow _presentedModal;
+		private NSWindow _presentedSheet;
 
 		protected virtual NSApplicationDelegate ApplicationDelegate
 		{
@@ -36,6 +44,10 @@ namespace MvxTest.Mac
 			{
 				return this._window;
 			}
+		}
+
+		public virtual CGRect GetRectForWindowWithViewController(NSViewController viewController, WindowPresentationStyle presentationStyle) {
+			return this.Window?.Frame ?? new CGRect (200, 200, 600, 400);
 		}
 
 		public MvxSnappMacViewPresenter(NSApplicationDelegate applicationDelegate, NSWindow window)
@@ -85,7 +97,7 @@ namespace MvxTest.Mac
 				return;
 			}
 
-			_presentedModal = new NSWindow (new CGRect (200, 200, 600, 400), NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
+			_presentedModal = new NSWindow (this.GetRectForWindowWithViewController(viewController, WindowPresentationStyle.Modal), NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
 			if (!string.IsNullOrEmpty(viewController.Title)) {
 				_presentedModal.Title = viewController.Title;
 			}
@@ -97,7 +109,7 @@ namespace MvxTest.Mac
 
 		protected virtual void ShowInNewWindow(NSViewController viewController, MvxViewModelRequest request)
 		{
-			var window = new NSWindow (new CGRect (200, 200, 600, 400), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
+			var window = new NSWindow (this.GetRectForWindowWithViewController(viewController, WindowPresentationStyle.NewWindow), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
 
 			window.WillClose += Window_WillClose;
 			if (!string.IsNullOrEmpty(viewController.Title)) {
@@ -115,6 +127,14 @@ namespace MvxTest.Mac
 			_windowViewControllers.Add (window, stack);
 			MvxViewController vc = viewController as MvxViewController;
 			_vmWindowDictionary.Add (vc.ViewModel, window);
+		}
+
+		protected virtual void ShowInSheet(NSViewController viewController, MvxViewModelRequest request)
+		{
+			_presentedSheet = new NSWindow (this.GetRectForWindowWithViewController(viewController, WindowPresentationStyle.Sheet), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
+			_presentedSheet.ContentView = viewController.View;
+
+			NSApplication.SharedApplication.BeginSheet (_presentedSheet, NSApplication.SharedApplication.MainWindow);
 		}
 
 		void Window_WillClose (object sender, EventArgs e)
@@ -142,8 +162,10 @@ namespace MvxTest.Mac
 		{
 			if (viewController is IMvxMacModalView) {
 				this.ShowAsModal (viewController, request);
-			} else if(viewController is IMvxMacNewWindowView) {
+			} else if (viewController is IMvxMacNewWindowView) {
 				this.ShowInNewWindow (viewController, request);
+			} else if(viewController is IMvxMacSheetView) {
+				this.ShowInSheet (viewController, request);
 			} else {
 				// If MainWindow is null, then we are properbly starting the app, and should select the Window we got offered
 				var currentWindow = NSApplication.SharedApplication.MainWindow ?? Window;
@@ -163,9 +185,13 @@ namespace MvxTest.Mac
 		public virtual void Close(IMvxViewModel toClose)
 		{
 			if (_presentedModal != null) {
-				NSApplication.SharedApplication.StopModal();
+				NSApplication.SharedApplication.StopModal ();
 				_presentedModal.Close ();
 				_presentedModal = null;
+			} else if(_presentedSheet != null) {
+				NSApplication.SharedApplication.EndSheet (_presentedSheet);
+				_presentedSheet.Close ();
+				_presentedSheet = null;
 			} else {
 				var window = _vmWindowDictionary [toClose];
 				var stack = _windowViewControllers [window];
@@ -196,6 +222,11 @@ namespace MvxTest.Mac
 	}
 
 	public interface IMvxMacNewWindowView
+	{
+
+	}
+
+	public interface IMvxMacSheetView
 	{
 
 	}
