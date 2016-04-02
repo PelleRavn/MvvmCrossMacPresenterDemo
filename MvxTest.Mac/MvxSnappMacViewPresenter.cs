@@ -109,6 +109,11 @@ namespace MvxTest.Mac
 
 		protected virtual void ShowInNewWindow(NSViewController viewController, MvxViewModelRequest request)
 		{
+			if (_presentedSheet != null) {
+				Mvx.Exception ("Only one sheet at a time is allowed!");
+				return;
+			}
+
 			var window = new NSWindow (this.GetRectForWindowWithViewController(viewController, WindowPresentationStyle.NewWindow), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
 
 			window.WillClose += Window_WillClose;
