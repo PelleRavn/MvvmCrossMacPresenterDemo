@@ -16,8 +16,7 @@ namespace MvxTest.Mac
 
 		public override void DidFinishLaunching(NSNotification notification)
 		{
-			_window = new NSWindow(new CGRect(200, 200, 600, 400), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled,
-				NSBackingStore.Buffered, false, NSScreen.MainScreen);
+			_window = new NSWindow(new CGRect(200, 200, 600, 400), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
 
 			var setup = new Setup(this, _window);
 			setup.Initialize();

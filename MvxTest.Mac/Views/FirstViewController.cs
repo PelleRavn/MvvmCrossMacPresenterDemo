@@ -10,6 +10,44 @@ using MvvmCross.Core.ViewModels;
 
 namespace MvxTest.Mac.Views
 {
+	public partial class NewWindowViewController : FirstViewController, IMvxMacNewWindowView
+	{
+		// Called when created from unmanaged code
+		public NewWindowViewController (IntPtr handle) : base (handle)
+		{
+		}
+
+		// Called when created directly from a XIB file
+		[Export ("initWithCoder:")]
+		public NewWindowViewController (NSCoder coder) : base (coder)
+		{
+		}
+
+		// Call to load from the XIB/NIB file
+		public NewWindowViewController ()
+		{
+		}
+	}
+
+	public partial class ModalViewController : FirstViewController, IMvxMacModalView
+	{
+		// Called when created from unmanaged code
+		public ModalViewController (IntPtr handle) : base (handle)
+		{
+		}
+
+		// Called when created directly from a XIB file
+		[Export ("initWithCoder:")]
+		public ModalViewController (NSCoder coder) : base (coder)
+		{
+		}
+
+		// Call to load from the XIB/NIB file
+		public ModalViewController ()
+		{
+		}
+	}
+
 	[MvxViewFor(typeof(FirstViewModel))]
 	public partial class FirstViewController : MvxViewController
 	{
@@ -37,6 +75,7 @@ namespace MvxTest.Mac.Views
 		// Shared initialization code
 		void Initialize ()
 		{
+			this.Title = "Første skærm!";
 		}
 
 		#endregion
@@ -46,7 +85,12 @@ namespace MvxTest.Mac.Views
 			base.ViewDidLoad ();
 
 			var set = this.CreateBindingSet<FirstViewController, FirstViewModel> ();
+			set.Bind (TextField).To (vm => vm.Hello);
+			set.Bind (TextLabel).To (vm => vm.Hello);
 			set.Bind (NextButton).To (vm => vm.GoNextCommand);
+			set.Bind (OpenModalButton).To (vm => vm.ModalCommand);
+			set.Bind (OpenWindowButton).To (vm => vm.NewWindowCommand);
+			set.Bind (CloseButton).To (vm => vm.CloseCommand);
 			set.Apply ();
 		}
 	}

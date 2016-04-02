@@ -37,7 +37,7 @@ namespace MvxTest.Mac.Views
 		// Shared initialization code
 		void Initialize ()
 		{
-			this.Title = "Jeg er vild";
+			this.Title = "Vild modal!";
 		}
 
 		#endregion

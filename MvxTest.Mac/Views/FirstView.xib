@@ -7,7 +7,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FirstViewController">
             <connections>
+                <outlet property="CloseButton" destination="nmt-LJ-OpG" id="CGp-3U-1h5"/>
                 <outlet property="NextButton" destination="clu-TB-BdT" id="noD-OU-uiA"/>
+                <outlet property="OpenModalButton" destination="xXc-sm-HTH" id="GxR-HC-l2J"/>
+                <outlet property="OpenWindowButton" destination="AKI-Fn-b0N" id="YMQ-Ht-G5a"/>
+                <outlet property="TextField" destination="4Qr-sM-JPV" id="s1B-vS-LYC"/>
+                <outlet property="TextLabel" destination="wwW-J1-STq" id="pi6-1O-VUO"/>
                 <outlet property="view" destination="4" id="17"/>
             </connections>
         </customObject>
@@ -18,26 +23,64 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="clu-TB-BdT">
-                    <rect key="frame" x="152" y="195" width="166" height="32"/>
+                    <rect key="frame" x="152" y="166" width="166" height="32"/>
                     <buttonCell key="cell" type="push" title="Go to second screen" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DOX-qt-rku">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xXc-sm-HTH">
+                    <rect key="frame" x="178" y="125" width="114" height="32"/>
+                    <buttonCell key="cell" type="push" title="Open modal" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Og0-Hz-gbw">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AKI-Fn-b0N">
+                    <rect key="frame" x="160" y="84" width="151" height="32"/>
+                    <buttonCell key="cell" type="push" title="Open new window" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Slz-FV-TqH">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Qr-sM-JPV">
-                    <rect key="frame" x="187" y="241" width="96" height="22"/>
+                    <rect key="frame" x="187" y="214" width="96" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="cbm-md-ff6">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wwW-J1-STq">
+                    <rect key="frame" x="18" y="259" width="434" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="Tbv-lK-MQf">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nmt-LJ-OpG">
+                    <rect key="frame" x="198" y="43" width="75" height="32"/>
+                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cXQ-ig-psw">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstItem="nmt-LJ-OpG" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="1Ut-LS-Qfw"/>
+                <constraint firstItem="xXc-sm-HTH" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="2Sf-aI-Z2B"/>
                 <constraint firstItem="4Qr-sM-JPV" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="187" id="5dW-Z6-EBK"/>
-                <constraint firstItem="4Qr-sM-JPV" firstAttribute="top" secondItem="4" secondAttribute="top" constant="33" id="LhM-bo-pEW"/>
-                <constraint firstItem="clu-TB-BdT" firstAttribute="top" secondItem="4Qr-sM-JPV" secondAttribute="bottom" constant="18" id="THj-Ke-2l1"/>
+                <constraint firstItem="AKI-Fn-b0N" firstAttribute="top" secondItem="xXc-sm-HTH" secondAttribute="bottom" constant="20" id="MAG-VA-p8g"/>
+                <constraint firstItem="AKI-Fn-b0N" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="PEN-Vi-asB"/>
+                <constraint firstItem="clu-TB-BdT" firstAttribute="top" secondItem="4Qr-sM-JPV" secondAttribute="bottom" constant="20" id="THj-Ke-2l1"/>
                 <constraint firstItem="clu-TB-BdT" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="bov-wi-BvR"/>
+                <constraint firstItem="xXc-sm-HTH" firstAttribute="top" secondItem="clu-TB-BdT" secondAttribute="bottom" constant="20" id="dvE-6y-OWH"/>
+                <constraint firstAttribute="trailing" secondItem="wwW-J1-STq" secondAttribute="trailing" constant="20" symbolic="YES" id="fzj-ts-LEA"/>
+                <constraint firstItem="nmt-LJ-OpG" firstAttribute="top" secondItem="AKI-Fn-b0N" secondAttribute="bottom" constant="20" id="h9q-Ld-Yk3"/>
+                <constraint firstItem="wwW-J1-STq" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="20" symbolic="YES" id="iEz-G3-upK"/>
+                <constraint firstItem="4Qr-sM-JPV" firstAttribute="top" secondItem="wwW-J1-STq" secondAttribute="bottom" constant="23" id="nXb-hz-jKb"/>
+                <constraint firstItem="wwW-J1-STq" firstAttribute="top" secondItem="4" secondAttribute="top" constant="20" id="o76-Qh-TDX"/>
                 <constraint firstAttribute="trailing" secondItem="4Qr-sM-JPV" secondAttribute="trailing" constant="187" id="tTO-S6-32I"/>
             </constraints>
         </customView>

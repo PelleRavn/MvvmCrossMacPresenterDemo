@@ -8,6 +8,7 @@ using MvvmCross.Platform.Exceptions;
 using System.Linq;
 using System.Collections.Generic;
 using CoreGraphics;
+using Foundation;
 
 namespace MvxTest.Mac
 {
@@ -17,7 +18,8 @@ namespace MvxTest.Mac
 		private readonly NSApplicationDelegate _applicationDelegate;
 		private readonly NSWindow _window;
 
-		private Stack<NSViewController> _viewControllers = new Stack<NSViewController> ();
+		private Dictionary<NSWindow, Stack<NSViewController>> _windowViewControllers = new Dictionary<NSWindow, Stack<NSViewController>>();
+		private Dictionary<IMvxViewModel, NSWindow> _vmWindowDictionary = new Dictionary<IMvxViewModel, NSWindow>();
 		private NSWindow _presentedModal;
 
 		protected virtual NSApplicationDelegate ApplicationDelegate
@@ -40,6 +42,9 @@ namespace MvxTest.Mac
 		{
 			this._applicationDelegate = applicationDelegate;
 			this._window = window;
+
+			window.WillClose += Window_WillClose;
+			_windowViewControllers.Add (window, new Stack<NSViewController> ());
 		}
 
 		public override void Show(MvxViewModelRequest request)
@@ -51,9 +56,8 @@ namespace MvxTest.Mac
 
 		public override void ChangePresentation(MvxPresentationHint hint)
 		{
-			if (hint is MvxClosePresentationHint)
-			{
-				this.Close((hint as MvxClosePresentationHint).ViewModelToClose);
+			if (hint is MvxClosePresentationHint) {
+				this.Close ((hint as MvxClosePresentationHint).ViewModelToClose);
 				return;
 			}
 
@@ -74,26 +78,85 @@ namespace MvxTest.Mac
 			this.Show(viewController, request);
 		}
 
+		protected virtual void ShowAsModal(NSViewController viewController, MvxViewModelRequest request)
+		{
+			if (_presentedModal != null) {
+				Mvx.Exception ("Only one modal at a time is allowed!");
+				return;
+			}
+
+			_presentedModal = new NSWindow (new CGRect (200, 200, 600, 400), NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
+			if (!string.IsNullOrEmpty(viewController.Title)) {
+				_presentedModal.Title = viewController.Title;
+			}
+
+			_presentedModal.ContentView = viewController.View;
+
+			NSApplication.SharedApplication.RunModalForWindow (_presentedModal);
+		}
+
+		protected virtual void ShowInNewWindow(NSViewController viewController, MvxViewModelRequest request)
+		{
+			var window = new NSWindow (new CGRect (200, 200, 600, 400), NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled, NSBackingStore.Buffered, false, NSScreen.MainScreen);
+
+			window.WillClose += Window_WillClose;
+			if (!string.IsNullOrEmpty(viewController.Title)) {
+				window.Title = viewController.Title;
+			}
+
+			var stack = new Stack<NSViewController> ();
+			stack.Push (viewController);
+
+			window.ContentView = viewController.View;
+			NSWindowController windowController = new NSWindowController (window);
+			windowController.ShouldCascadeWindows = true;
+			windowController.ShowWindow (null);
+
+			_windowViewControllers.Add (window, stack);
+			MvxViewController vc = viewController as MvxViewController;
+			_vmWindowDictionary.Add (vc.ViewModel, window);
+		}
+
+		void Window_WillClose (object sender, EventArgs e)
+		{
+			NSNotification notification = (NSNotification)sender;
+			var window = (NSWindow)notification.Object;
+			window.WillClose -= Window_WillClose;
+			if (_windowViewControllers.ContainsKey (window)) {
+				var stack = _windowViewControllers [window];
+
+				// Remove all view controllers that may be in the stack of the window
+				while (stack.Any()) {
+					var vc = stack.Pop () as MvxViewController;
+					if (vc != null && vc.ViewModel != null) {
+						_vmWindowDictionary.Remove (vc.ViewModel);
+					}
+				}
+
+				_windowViewControllers.Remove (window);
+				stack.Clear ();
+			}
+		}
+
 		protected virtual void Show(NSViewController viewController, MvxViewModelRequest request)
 		{
 			if (viewController is IMvxMacModalView) {
-				_presentedModal = new NSWindow (new CGRect (200, 200, 600, 400), NSWindowStyle.Titled | NSWindowStyle.Closable, NSBackingStore.Buffered, false, NSScreen.MainScreen);
-				if (!string.IsNullOrEmpty(viewController.Title)) {
-					_presentedModal.Title = viewController.Title;
-				}
-
-				_presentedModal.ContentView = viewController.View;
-
-				NSApplication.SharedApplication.RunModalForWindow (_presentedModal);
+				this.ShowAsModal (viewController, request);
+			} else if(viewController is IMvxMacNewWindowView) {
+				this.ShowInNewWindow (viewController, request);
 			} else {
-				
-				_viewControllers.Push (viewController);
+				// If MainWindow is null, then we are properbly starting the app, and should select the Window we got offered
+				var currentWindow = NSApplication.SharedApplication.MainWindow ?? Window;
+				var stack = _windowViewControllers [currentWindow];
+				stack.Push (viewController);
 
 				if (!string.IsNullOrEmpty(viewController.Title)) {
-					this.Window.Title = viewController.Title;
+					currentWindow.Title = viewController.Title;
 				}
 
-				this.Window.ContentView = viewController.View;
+				currentWindow.ContentView = viewController.View;
+				MvxViewController vc = viewController as MvxViewController;
+				_vmWindowDictionary.Add (vc.ViewModel, currentWindow);
 			}
 		}
 
@@ -104,11 +167,24 @@ namespace MvxTest.Mac
 				_presentedModal.Close ();
 				_presentedModal = null;
 			} else {
-				if (_viewControllers.Count > 1) {
-					_viewControllers.Pop ();
-					var viewController = _viewControllers.Peek ();
+				var window = _vmWindowDictionary [toClose];
+				var stack = _windowViewControllers [window];
+				if (stack.Count > 1) {
+					stack.Pop ();
+					var viewController = stack.Peek ();
 
-					this.Window.ContentView = viewController.View;
+					window.ContentView = viewController.View;
+					if (!string.IsNullOrEmpty (viewController.Title)) {
+						window.Title = viewController.Title;
+					}
+
+					_vmWindowDictionary.Remove (toClose);
+				} else {
+					stack.Clear();
+					_windowViewControllers.Remove (window);
+
+					window.WillClose -= Window_WillClose;
+					window.Close ();
 				}
 			}
 		}
@@ -119,7 +195,7 @@ namespace MvxTest.Mac
 		
 	}
 
-	public interface IMvxMacInWindowView
+	public interface IMvxMacNewWindowView
 	{
 
 	}
