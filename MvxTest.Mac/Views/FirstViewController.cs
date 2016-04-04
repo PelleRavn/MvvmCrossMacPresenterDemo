@@ -75,7 +75,7 @@ namespace MvxTest.Mac.Views
 		// Shared initialization code
 		void Initialize ()
 		{
-			this.Title = "Første skærm!";
+			this.Title = "First Window";
 		}
 
 		#endregion
@@ -89,6 +89,7 @@ namespace MvxTest.Mac.Views
 			set.Bind (TextLabel).To (vm => vm.Hello);
 			set.Bind (NextButton).To (vm => vm.GoNextCommand);
 			set.Bind (OpenModalButton).To (vm => vm.ModalCommand);
+			set.Bind (OpenSheetButton).To (vm => vm.SheetCommand);
 			set.Bind (OpenWindowButton).To (vm => vm.NewWindowCommand);
 			set.Bind (CloseButton).To (vm => vm.CloseCommand);
 			set.Apply ();

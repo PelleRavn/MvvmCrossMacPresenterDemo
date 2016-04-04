@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ThirdViewController">
+            <connections>
+                <outlet property="CloseButton" destination="sut-wa-Zh8" id="DJZ-Da-UN1"/>
+                <outlet property="view" destination="4" id="17"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="4">
+            <rect key="frame" x="0.0" y="0.0" width="470" height="296"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ioI-6u-NiO">
+                    <rect key="frame" x="215" y="215" width="40" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sheet" id="cJU-QS-rc6">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sut-wa-Zh8">
+                    <rect key="frame" x="198" y="166" width="75" height="32"/>
+                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="N6g-Qc-ZkR">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ioI-6u-NiO" firstAttribute="top" secondItem="4" secondAttribute="top" constant="64" id="IJs-aq-EUo"/>
+                <constraint firstItem="sut-wa-Zh8" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="ZOb-CB-uIz"/>
+                <constraint firstItem="sut-wa-Zh8" firstAttribute="top" secondItem="ioI-6u-NiO" secondAttribute="bottom" constant="21" id="mqS-9j-bQb"/>
+                <constraint firstItem="ioI-6u-NiO" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="pXA-cM-hT4"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

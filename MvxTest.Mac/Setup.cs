@@ -27,7 +27,7 @@ namespace MvxTest.Mac
 
 		protected override IMvxMacViewPresenter CreatePresenter ()
 		{
-			return new MvxSnappMacViewPresenter (this.ApplicationDelegate, this.Window);
+			return new MvxPrototypeMacViewPresenter (this.ApplicationDelegate, this.Window);
 		}
     }
 }

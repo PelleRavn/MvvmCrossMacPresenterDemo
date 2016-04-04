@@ -79,6 +79,20 @@ namespace MvxTest.Core.ViewModels
 			ShowViewModel<SecondViewModel> ();
 		}
 
+		private MvxCommand _sheetCommand;
+
+		public ICommand SheetCommand {
+			get {
+				_sheetCommand = _sheetCommand ?? new MvxCommand (DoSheetCommand);
+				return _sheetCommand;
+			}
+		}
+
+		private void DoSheetCommand ()
+		{
+			ShowViewModel<ThirdViewModel> ();
+		}
+
 		private MvxCommand _closeCommand;
 
 		public ICommand CloseCommand {

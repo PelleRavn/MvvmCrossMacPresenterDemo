@@ -32,7 +32,6 @@ namespace MvxTest.Core.ViewModels
 
 		private void DoBackCommand ()
 		{
-//			ChangePresentation (new MvxClosePresentationHint(this));
 			Close (this);
 		}
 	}

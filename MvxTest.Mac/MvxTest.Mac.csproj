@@ -64,13 +64,13 @@
       <HintPath>..\packages\MvvmCross.Core.4.1.0\lib\Xamarin.Mac20\MvvmCross.Core.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Binding.Mac">
-      <HintPath>..\packages\MvvmCross.Binding.4.1.0\lib\Xamarin.Mac20\MvvmCross.Binding.Mac.dll</HintPath>
+      <HintPath>..\packages\MvvmCross.Binding.4.1.1\lib\Xamarin.Mac20\MvvmCross.Binding.Mac.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Binding">
-      <HintPath>..\packages\MvvmCross.Binding.4.1.0\lib\Xamarin.Mac20\MvvmCross.Binding.dll</HintPath>
+      <HintPath>..\packages\MvvmCross.Binding.4.1.1\lib\Xamarin.Mac20\MvvmCross.Binding.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Localization">
-      <HintPath>..\packages\MvvmCross.Binding.4.1.0\lib\Xamarin.Mac20\MvvmCross.Localization.dll</HintPath>
+      <HintPath>..\packages\MvvmCross.Binding.4.1.1\lib\Xamarin.Mac20\MvvmCross.Localization.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -107,7 +107,11 @@
     <Compile Include="Views\FirstViewController.designer.cs">
       <DependentUpon>FirstViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="MvxSnappMacViewPresenter.cs" />
+    <Compile Include="Views\ThirdViewController.cs" />
+    <Compile Include="Views\ThirdViewController.designer.cs">
+      <DependentUpon>ThirdViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MvxPrototypeMacViewPresenter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <ItemGroup>
@@ -122,6 +126,7 @@
     <InterfaceDefinition Include="Resources\Views\FirstView.xib" />
     <InterfaceDefinition Include="Views\SecondView.xib" />
     <InterfaceDefinition Include="Views\FirstView.xib" />
+    <InterfaceDefinition Include="Views\ThirdView.xib" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Info.plist" />

@@ -22,6 +22,9 @@ namespace MvxTest.Mac.Views
 		AppKit.NSButton OpenModalButton { get; set; }
 
 		[Outlet]
+		AppKit.NSButton OpenSheetButton { get; set; }
+
+		[Outlet]
 		AppKit.NSButton OpenWindowButton { get; set; }
 
 		[Outlet]
@@ -32,6 +35,11 @@ namespace MvxTest.Mac.Views
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (CloseButton != null) {
+				CloseButton.Dispose ();
+				CloseButton = null;
+			}
+
 			if (NextButton != null) {
 				NextButton.Dispose ();
 				NextButton = null;
@@ -57,9 +65,9 @@ namespace MvxTest.Mac.Views
 				TextLabel = null;
 			}
 
-			if (CloseButton != null) {
-				CloseButton.Dispose ();
-				CloseButton = null;
+			if (OpenSheetButton != null) {
+				OpenSheetButton.Dispose ();
+				OpenSheetButton = null;
 			}
 		}
 	}

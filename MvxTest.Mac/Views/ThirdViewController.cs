@@ -6,30 +6,28 @@ using AppKit;
 using MvvmCross.Mac.Views;
 using MvvmCross.Binding.BindingContext;
 using MvxTest.Core.ViewModels;
-using MvvmCross.Core.ViewModels;
 
 namespace MvxTest.Mac.Views
 {
-	[MvxViewFor(typeof(SecondViewModel))]
-	public partial class SecondViewController : MvxViewController, IMvxMacModalView
+	public partial class ThirdViewController : MvxViewController, IMvxMacSheetView
 	{
 		#region Constructors
 
 		// Called when created from unmanaged code
-		public SecondViewController (IntPtr handle) : base (handle)
+		public ThirdViewController (IntPtr handle) : base (handle)
 		{
 			Initialize ();
 		}
 
 		// Called when created directly from a XIB file
 		[Export ("initWithCoder:")]
-		public SecondViewController (NSCoder coder) : base (coder)
+		public ThirdViewController (NSCoder coder) : base (coder)
 		{
 			Initialize ();
 		}
 
 		// Call to load from the XIB/NIB file
-		public SecondViewController () : base ("SecondView", NSBundle.MainBundle)
+		public ThirdViewController () : base ("ThirdView", NSBundle.MainBundle)
 		{
 			Initialize ();
 		}
@@ -37,20 +35,19 @@ namespace MvxTest.Mac.Views
 		// Shared initialization code
 		void Initialize ()
 		{
-			this.Title = "Modal";
+			this.Title = "Sheet";
 		}
 
 		#endregion
 
 		public override void ViewDidLoad ()
 		{
-			
 			base.ViewDidLoad ();
-			var set = this.CreateBindingSet<SecondViewController, SecondViewModel>();
-			set.Bind(TextField).To(vm => vm.Hello);
-			set.Bind(TextLabel).To(vm => vm.Hello);
-			set.Bind(BackButton).To(vm => vm.BackCommand);
+
+			var set = this.CreateBindingSet<ThirdViewController, ThirdViewModel>();
+			set.Bind(CloseButton).To(vm => vm.CloseCommand);
 			set.Apply();
 		}
+
 	}
 }
