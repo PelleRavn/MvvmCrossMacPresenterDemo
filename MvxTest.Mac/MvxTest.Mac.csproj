@@ -122,7 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainView.xib" />
-    <InterfaceDefinition Include="Resources\MainView.xib" />
     <InterfaceDefinition Include="Resources\Views\FirstView.xib" />
     <InterfaceDefinition Include="Views\SecondView.xib" />
     <InterfaceDefinition Include="Views\FirstView.xib" />
